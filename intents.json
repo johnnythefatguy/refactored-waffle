@@ -1,0 +1,53 @@
+{"intents": [
+    {"tag": "greeting",
+      "patterns": ["Hi", "How are you", "Is anyone there?", "Hello", "Good day", "Whats up", "Hey", "greetings", "S' up"],
+      "responses": [],
+      "context_set": ""
+    },
+    {"tag": "goodbye",
+      "patterns": ["cya", "See you later", "Goodbye", "I am Leaving", "Have a Good day", "bye", "cao", "see ya"],
+      "responses": [],
+      "context_set": ""
+    },
+    {"tag": "music",
+      "patterns": ["Play music", "Music", "Open V L C", "Can I listen to music?", "Can you play me something?"],
+      "responses": [],
+      "context_set": ""
+    },
+    {"tag": "weather",
+      "patterns": ["Whats the weather like?", "Show me the weather", "Is supposed to rain", "weather"],
+      "responses": [],
+      "context_set": ""
+    },
+    {"tag": "date",
+      "patterns": ["Whats today's date", "What day is it?", "what time is it?", "time"],
+      "responses": [],
+      "context_set": ""
+    },
+    {"tag": "todo",
+      "patterns": ["Whats on my to do list?", "what needs to get done", "show me my tasks", "what needs to be done?"],
+      "responses": [],
+      "context_set": ""
+    },
+    {"tag": "todo_add",
+      "patterns": ["I need to add something to the list", "add to the list", "can you add something to my list", "add to list", "add task"],
+      "responses": [],
+      "context_set": ""
+    },
+    {"tag": "todo_remove",
+      "patterns": ["remove from list", "remove task", "can I remove a task"],
+      "responses": [],
+      "context_set": ""
+    },
+    {"tag": "spellcheck",
+      "patterns": ["spellcheck", "can you spell something for me?", "I need help spelling"],
+      "responses": [],
+      "context_set": ""
+    },
+    {"tag": "feeling",
+      "patterns": ["how are you feeling?", "how are you", "are you okay"],
+      "responses": [],
+      "context_set": ""
+    }
+  ]
+  }
