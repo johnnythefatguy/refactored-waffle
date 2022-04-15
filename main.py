@@ -159,6 +159,7 @@ def spellcheck():
     
 def feelings():
     speaker.say("As of right now this is what my health looks like.")
+    speaker.runAndWait()
     os.system("stacer")
     
 # future mappings , 'music' : music
