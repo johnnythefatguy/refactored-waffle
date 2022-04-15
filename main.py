@@ -1,6 +1,3 @@
-from email import message
-from logging import exception
-from tokenize import Special
 from neuralintents import GenericAssistant
 from textblob import TextBlob
 import requests, json, os, speech_recognition, pyttsx3, sys
@@ -12,32 +9,21 @@ speaker = pyttsx3.init()
 speaker.setProperty('rate', 100)
 
 def greetings():
-    global recognizer
-
-    done = False
-
-    while done != True:
-        try:
-            lines = []
-            with open('encounters.txt') as f:
-                lines = f.readlines()
-            count = 0
-            for line in lines:
-                count += 1
-            if count == 0:
-                speaker.say("Hello, my name is Paul. How may I assist you?")
-                speaker.runAndWait
-                done = True
-            elif count >= 1 and count <= 5:
-                speaker.say("Hello Johnny, hope you're doing well today?")
-                speaker.runAndWait
-                done = True
-            else:
-                speaker.say("Hello")
-                speaker.runAndWait
-                done = True
-        except speech_recognition.UnknownValueError:
-            recognizer = speech_recognition.Recognizer()
+    lines = []
+    with open('encounters.txt') as f:
+        lines = f.readlines()
+        count = 0
+        for line in lines:
+            count += 1
+        if count == 0:
+            speaker.say("Hello, my name is Paul. How may I assist you?")
+            speaker.runAndWait()
+        elif count >= 1 and count <= 5:
+            speaker.say("Hello Johnny, hope you're doing well today?")
+            speaker.runAndWait()
+        else:
+            speaker.say("Hello")
+            speaker.runAndWait()
             
 def goodbyes():
     encounter = open("encounters.txt", "a")  # append mode
@@ -57,51 +43,122 @@ def goodbyes():
 #    player.play()
     
 def weather():
-    response_API = requests.get('http://dataservice.accuweather.com/currentconditions/v1/333373?apikey=TxVfyVdvwGHc7vuwSrzdehvYnpUfESJi')
-    data = response_API.text
-    parse_json = json.dumps(json.loads(data), indent=4)
-    active_case = highlight(parse_json, lexers.JsonLexer(), formatters.TerminalFormatter())
-    print(active_case)
+    global recognizer
+
+    done = False
+
+    while done != True:
+        try:
+            response_API = requests.get('http://dataservice.accuweather.com/currentconditions/v1/333373?apikey=TxVfyVdvwGHc7vuwSrzdehvYnpUfESJi')
+            data = response_API.text
+            parse_json = json.dumps(json.loads(data), indent=4)
+            active_case = highlight(parse_json, lexers.JsonLexer(), formatters.TerminalFormatter())
+            speaker.say("Here is the current weather conditions.")
+            speaker.runAndWait()
+            print(active_case)
+            done = True
+        except speech_recognition.UnknownValueError():
+            recognizer = speech_recognition.Recognizer()
     
 def dates():
-    date = os.system('date')
-    print(date)
-    
+    global recognizer
+
+    done = False
+
+    while done != True:
+        try:
+            date = os.system('date')
+            speaker.say(date)
+            speaker.runAndWait()
+        except speech_recognition.UnknownValueError():
+            recognizer = speech_recognition.Recognizer()
+
 def todo_add():
-    a = str(input("What would you like to add to the list"))
-    todo = open("todo.txt", "a")
-    todo.write(f"* {a} \n")
-    todo.close()
+    global recognizer
+    
+    done = False
+    
+    while done != True:
+        try:
+            speaker.say("What would you like add to the list?")
+            speaker.runAndWait()
+            with speech_recognition.Microphone as mic:
+                recognizer.adjust_for_ambient_noise(mic, duration=0.5)
+                audio = recognizer.listen(mic)
+                messages = recognizer.recognize_google(audio)
+                messages = messages.lower()
+            todo = open("todo.txt", "a")
+            todo.write(f"* {messages} \n")
+            todo.close()
+            speaker.say(f"{messages} was added to the list.")
+            speaker.runAndWait()
+        except speech_recognition.UnknownValueError():
+            recognizer = speech_recognition.Recognizer()
     
 def todo_remove():
-    search = input("keyword?")
-    try:
-        with open('todo.txt', 'r') as fr:
-            lines = fr.readlines()
-            with open('todo1.txt', 'w') as fw:
-                for line in lines:
-                    if line.find(search) == -1:
-                        fw.write(line)
-        print("Deleted")
-        os.replace("todo1.txt", "todo.txt")
-    except:
-        print("Oops! something error")
+    global recognizer
+    
+    done = False
+    
+    while done != True:
+        try:
+            speaker.say("What is a keyword unique to the activity you wish to remove?")
+            speaker.runAndWait()
+            with speech_recognition.Microphone as mic:
+                recognizer.adjust_for_ambient_noise(mic, duration=0.5)
+                audio = recognizer.listen(mic)
+                messages = recognizer.recognize_google(audio)
+                messages = messages.lower()
+            try:
+                with open('todo.txt', 'r') as fr:
+                    lines = fr.readlines()
+                    with open('todo1.txt', 'w') as fw:
+                        for line in lines:
+                            if line.find(messages) == -1:
+                                fw.write(line)
+                speaker.say("Activity was deleted")
+                speaker.runAndWait()
+                os.replace("todo1.txt", "todo.txt")
+            except:
+                speaker.say("Was unable to delete activity")
+                speaker.runAndWait()
+        except speech_recognition.UnknownValueError():
+            recognizer = speech_recognition.Recognizer()
+            
 
 def show_todo():
     lines = []
-    print("Items are in the order they were added.")
-    print("Here's what needs to be done...")
+    speaker.say("Items are in the order they were added.")
+    speaker.runAndWait()
+    speaker.say("Here's what needs to be done...")
+    speaker.runAndWait()
     with open('todo.txt') as f:
         lines = f.readlines()
     for line in lines:
-        print(line)
+        speaker.say(line)
+        speaker.runAndWait()
         
 def spellcheck():
-    a = str(input("What word would do you need help with? "))          
-    b = TextBlob(a)
-    print(str(b.correct()))
+    global recognizer
+    
+    done = False
+    
+    while done != True:
+        try:
+            speaker.say("What word do you need help with?")
+            speaker.runAndWait()
+            with speech_recognition.Microphone as mic:
+                recognizer.adjust_for_ambient_noise(mic, duration=0.5)
+                audio = recognizer.listen(mic)
+                messages = recognizer.recognize_google(audio)
+                messages = messages.lower()         
+            b = TextBlob(messages)
+            speaker.say(str(b.correct()))
+        except speech_recognition.UnknownValueError():
+            recognizer = speech_recognition.Recognizer()
     
 def feelings():
+    speaker.say("As of right now this is what my health looks like.")
     os.system("stacer")
     
 # future mappings , 'music' : music
@@ -120,7 +177,7 @@ while True:
             recognizer.adjust_for_ambient_noise(mic, duration=0.5)
             audio = recognizer.listen(mic)
             messages = recognizer.recognize_google(audio)
-            messages = message.lower()
+            messages = messages.lower()
         assistant.request(messages)
     except speech_recognition.UnknownValueError:
         recognizer = speech_recognition.Recognizer()
