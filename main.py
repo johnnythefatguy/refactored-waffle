@@ -3,8 +3,8 @@ from textblob import TextBlob
 import requests, json, os, speech_recognition, pyttsx3, sys, subprocess
 from pygments import highlight, lexers, formatters
 
-code-name = "ash"
-name = code-name
+code_name = # you can just use the name variable but idk what to name my bot yet
+name = code_name
 
 recognizer = speech_recognition.Recognizer()
 
@@ -63,7 +63,7 @@ def music():
                 audio = recognizer.listen(mic)
                 messages = recognizer.recognize_google(audio)
                 messages = messages.lower().replace(" ", "")
-            playlist = f"/home/Paul/Music/{messages}"
+            playlist = f"/home/{name}/Music/{messages}"
             media_player = vlc.MediaPlayer()
             media = vlc.Media(playlist)
             media_player.set_media(media)
@@ -89,8 +89,8 @@ def music():
 def weather():
     global recognizer
 
-    api_key = # your api key 
-    location = # your location code
+    api_key = 
+    location = 
 
     done = False
 
@@ -220,7 +220,7 @@ assistant.save_model()
 WAKE = f"Hey {name}"
 
 while True:
-    text = get_audio()
+    text = get_audio().replace(" ", "")
     if text.count(WAKE) > 0:
         try:
             with speech_recognition.Microphone(device_index=14) as mic:

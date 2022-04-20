@@ -2,3 +2,4 @@ python3.10
 vlc
 stacer
 accuweather api
+cava
