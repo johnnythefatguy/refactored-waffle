@@ -89,11 +89,14 @@ def music():
 def weather():
     global recognizer
 
+    api_key = # your api key 
+    location = # your location code
+
     done = False
 
     while done != True:
         try:
-            response_API = requests.get('http://dataservice.accuweather.com/currentconditions/v1/333373?apikey=TxVfyVdvwGHc7vuwSrzdehvYnpUfESJi')
+            response_API = requests.get(f'http://dataservice.accuweather.com/currentconditions/v1/{location}?apikey={api_key}')
             data = response_API.text
             parse_json = json.dumps(json.loads(data), indent=4)
             active_case = highlight(parse_json, lexers.JsonLexer(), formatters.TerminalFormatter())

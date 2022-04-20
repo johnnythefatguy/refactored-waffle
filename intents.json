@@ -48,6 +48,11 @@
       "patterns": ["how are you feeling?", "how are you", "are you okay", "what's wrong?"],
       "responses": [],
       "context_set": ""
+    },
+    {"tag": "name",
+      "patterns": ["who are you", "whats your name", "you got a name", "do you have a name", "what do they call you", "what do i call you"],
+      "responses": [],
+      "context_set": ""
     }
   ]
   }
