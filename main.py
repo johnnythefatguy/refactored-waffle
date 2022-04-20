@@ -2,8 +2,9 @@ from neuralintents import GenericAssistant
 from textblob import TextBlob
 import requests, json, os, speech_recognition, pyttsx3, sys, subprocess
 from pygments import highlight, lexers, formatters
+from os.path import exists
 
-code_name = # you can just use the name variable but idk what to name my bot yet
+code_name = 
 name = code_name
 
 recognizer = speech_recognition.Recognizer()
@@ -212,10 +213,14 @@ def feelings():
         
 mappings = {'greeting' : greetings, 'weather' : weather, 'goodbye' : goodbyes, 'date' : dates, 'todo_add' : todo_add, 'todo_remove' : todo_remove, 'todo' : show_todo, 'spellcheck' : spellcheck, 'feeling' : feelings, 'music' : music, "name": your_name}
 
-assistant = GenericAssistant('intents.json', intent_methods=mappings ,model_name="test_model")
-assistant.train_model()
-assistant.save_model()
-#assistant.load_model()
+assistant = GenericAssistant('intents.json', intent_methods=mappings ,model_name=name)
+
+if exists(f"/home/{name}/VA/{name}.h5") == True:
+    assistant.load_model()
+elif exists(f"/home/{name}/VA/{name}.h5") == False:
+    assistant.train_model()
+    assistant.save_model()
+
 
 WAKE = f"Hey {name}"
 
