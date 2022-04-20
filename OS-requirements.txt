@@ -3,3 +3,4 @@ vlc
 stacer
 accuweather api
 cava
+lolcat
