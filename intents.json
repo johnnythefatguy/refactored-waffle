@@ -45,7 +45,7 @@
       "context_set": ""
     },
     {"tag": "feeling",
-      "patterns": ["how are you feeling?", "how are you", "are you okay"],
+      "patterns": ["how are you feeling?", "how are you", "are you okay", "what's wrong?"],
       "responses": [],
       "context_set": ""
     }
