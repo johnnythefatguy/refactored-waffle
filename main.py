@@ -4,7 +4,7 @@ import requests, json, os, speech_recognition, pyttsx3, sys, subprocess
 from pygments import highlight, lexers, formatters
 from os.path import exists
 
-code_name = 
+code_name = ""
 name = code_name
 
 recognizer = speech_recognition.Recognizer()
@@ -90,8 +90,8 @@ def music():
 def weather():
     global recognizer
 
-    api_key = 
-    location = 
+    api_key = ""
+    location = ""
 
     done = False
 
