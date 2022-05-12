@@ -1,4 +1,8 @@
 ## Notes ##
+need speakers and a better mic
+add the following to ~/.bashrc of the pi4 
+    figlet "UwUbot"
+write startup script
 
-##Features ##
+## Features ##
 Ask how someone is doing

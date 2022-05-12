@@ -4,7 +4,7 @@ import requests, json, os, speech_recognition, pyttsx3, sys, subprocess
 from pygments import highlight, lexers, formatters
 from os.path import exists
 
-code_name = 
+code_name = "UwUbot"
 name = code_name
 
 recognizer = speech_recognition.Recognizer()
@@ -90,8 +90,8 @@ def music():
 def weather():
     global recognizer
 
-    api_key = 
-    location = 
+    api_key = "TxVfyVdvwGHc7vuwSrzdehvYnpUfESJi"
+    location = "333373"
 
     done = False
 
@@ -215,9 +215,9 @@ mappings = {'greeting' : greetings, 'weather' : weather, 'goodbye' : goodbyes, '
 
 assistant = GenericAssistant('intents.json', intent_methods=mappings ,model_name=name)
 
-if exists(f"/home/{name}/VA/{name}.h5") == True:
+if exists(f"/home/*/VA/{name}.h5") == True:
     assistant.load_model()
-elif exists(f"/home/{name}/VA/{name}.h5") == False:
+elif exists(f"/home/*/VA/{name}.h5") == False:
     assistant.train_model()
     assistant.save_model()
 
